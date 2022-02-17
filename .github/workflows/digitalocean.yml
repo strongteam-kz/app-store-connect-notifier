@@ -47,6 +47,10 @@ jobs:
         NUMBER_OF_BUILDS: ${{ secrets.NUMBER_OF_BUILDS }}
         TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
         TELEGRAM_CHAT_IDS: ${{ secrets.TELEGRAM_CHAT_IDS }}
+        ATLASSIAN_HOST: ${{ secrets.ATLASSIAN_HOST }}
+        ATLASSIAN_USERNAME: ${{ secrets.ATLASSIAN_USERNAME }}
+        ATLASSIAN_TOKEN: ${{ secrets.ATLASSIAN_TOKEN }}
+        GIT_CLONE_URL: ${{ secrets.GIT_CLONE_URL }}
       run: |
         touch .env.jysan
         echo SPACESHIP_CONNECT_API_KEY="\"$SPACESHIP_CONNECT_API_KEY\"" >> .env.jysan
@@ -61,6 +65,10 @@ jobs:
         echo NUMBER_OF_BUILDS="\"$NUMBER_OF_BUILDS\"" >> .env.jysan
         echo TELEGRAM_BOT_TOKEN="\"$TELEGRAM_BOT_TOKEN\"" >> .env.jysan
         echo TELEGRAM_CHAT_IDS="\"$TELEGRAM_CHAT_IDS\"" >> .env.jysan
+        echo ATLASSIAN_HOST="\"$ATLASSIAN_HOST\"" >> .env.jysan
+        echo ATLASSIAN_USERNAME="\"$ATLASSIAN_USERNAME\"" >> .env.jysan
+        echo ATLASSIAN_TOKEN="\"$ATLASSIAN_TOKEN\"" >> .env.jysan
+        echo GIT_CLONE_URL="\"$GIT_CLONE_URL\"" >> .env.jysan
       shell: bash
     
     - name: Run application

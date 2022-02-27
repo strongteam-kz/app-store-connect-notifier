@@ -172,21 +172,20 @@ async function postUsingBotToken(token, chatId, version, status, appName) {
         })
         if (lastVersionNumber != 0) {
             const resultMessage = await checkAndCreateReleaseIssue(jira, lastVersionNumber)
-            if (resultMessage.length > 0) {
+            if (resultMessage.length > 10) {
                 message += `\n\nЗадачи которые входят в релиз:\n${resultMessage}`
             }
         }
     }
 
     message += "\n\nДля получения более подробной информаций перейдите на @strong\\_manager\\_bot"
-
     const req = https.request(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${encodeURI(message)}&parse_mode=markdown`)
     req.end()
 }
 
 async function checkAndCreateReleaseIssue(jira, lastVersion) {
     const notes = await execShellCommand(`sh ci_generate_release_notes.sh ${process.env.GIT_CLONE_URL} release/${lastVersion} https://${process.env.ATLASSIAN_HOST} ${process.env.ATLASSIAN_USERNAME} ${process.env.ATLASSIAN_TOKEN}`)
-    if (notes.length > 0) {
+    if (notes.length > 10) {
         const issue = {
             "fields": {
               "project": {

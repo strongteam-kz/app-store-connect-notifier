@@ -17,9 +17,7 @@ function postToTelegram(version, status, appName) {
     const botToken = process.env.TELEGRAM_BOT_TOKEN
     const chatIds = process.env.TELEGRAM_CHAT_IDS
     if (botToken && chatIds) {
-        chatIds.split(",").forEach((chatId) => {
-            postUsingBotToken(botToken, chatId, version, status, appName)
-        })
+        postUsingBotToken(botToken, chatIds, version, status, appName)
     }
 }
 
@@ -135,7 +133,7 @@ function sendSlackMessage(webhookURL, messageBody) {
     })
 }
 
-async function postUsingBotToken(token, chatId, version, status, appName) {
+async function postUsingBotToken(token, chatIds, version, status, appName) {
     const https = require("https")
     const jira = new JiraApi({
         protocol: 'https',
@@ -179,8 +177,10 @@ async function postUsingBotToken(token, chatId, version, status, appName) {
     }
 
     message += "\n\nДля получения более подробной информаций перейдите на @strong\\_manager\\_bot"
-    const req = https.request(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${encodeURI(message)}&parse_mode=markdown`)
-    req.end()
+    chatIds.split(",").forEach((chatId) => {
+        const req = https.request(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${encodeURI(message)}&parse_mode=markdown`)
+        req.end()
+    })
 }
 
 async function checkAndCreateReleaseIssue(jira, lastVersion) {
@@ -205,7 +205,7 @@ async function checkAndCreateReleaseIssue(jira, lastVersion) {
               "description": notes,
             }
         }
-        jira.addNewIssue(issue)
+        await jira.addNewIssue(issue)
         .then((response) => {
             console.log(response)
         })

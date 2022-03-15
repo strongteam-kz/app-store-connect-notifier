@@ -72,4 +72,5 @@ jobs:
       shell: bash
     
     - name: Run application
-      run: pm2 restart Notifier
+      run: pm2 restart Notifier || pm2 start npm --name "Notifier" -- start
+

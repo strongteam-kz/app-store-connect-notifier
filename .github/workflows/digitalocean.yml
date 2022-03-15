@@ -28,7 +28,7 @@ jobs:
         cache: 'npm'
 
     - name: Stop previous notifier
-      run: pm2 stop 0
+      run: pm2 stop 0 || echo "PM2 process not found."
 
     - name: Dependencies install
       run: make init

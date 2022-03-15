@@ -156,7 +156,6 @@ async function postUsingBotToken(token, chatIds, version, status, appName) {
                 if (matchedVersion != null) {
                     if (matchedVersion.includes(version)) {
                         issue = tempIssue
-                        lastVersionNumber = 0
                     }
                     var versionNumber = parseFloat(matchedVersion[0])
                     if (versionNumber != NaN && lastVersionNumber < versionNumber) {
@@ -165,6 +164,7 @@ async function postUsingBotToken(token, chatIds, version, status, appName) {
                 }
             })
             if (issue != null) {
+                lastVersionNumber = 0
                 message += `\n\nЗадачи которые входят в релиз:\n${issue.fields.description}`
             }
         })

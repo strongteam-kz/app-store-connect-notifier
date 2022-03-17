@@ -60,7 +60,7 @@ jobs:
         echo BOT_SLACK_WEBHOOK_URL="\"$BOT_SLACK_WEBHOOK_URL\"" >> .env.jysan
         echo BOT_STATUS_SLACK_WEBHOOK_URL="\"$BOT_STATUS_SLACK_WEBHOOK_URL\"" >> .env.jysan
         echo SLACK_CHANNEL_NAME="\"$SLACK_CHANNEL_NAME\"" >> .env.jysan
-        echo ITC_TEAM_IDS="\"$ITC_TEAM_IDS\"" >> .env
+        echo ITC_TEAM_IDS="\"$ITC_TEAM_IDS\"" >> .env.jysan
         echo POLL_TIME_IN_SECONDS="\"$POLL_TIME_IN_SECONDS\"" >> .env.jysan
         echo NUMBER_OF_BUILDS="\"$NUMBER_OF_BUILDS\"" >> .env.jysan
         echo TELEGRAM_BOT_TOKEN="\"$TELEGRAM_BOT_TOKEN\"" >> .env.jysan

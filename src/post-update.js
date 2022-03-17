@@ -169,7 +169,7 @@ async function postUsingBotToken(token, chatIds, version, status, appName) {
             }
         })
         if (lastVersionNumber != 0) {
-            const resultMessage = await checkAndCreateReleaseIssue(jira, lastVersionNumber)
+            const resultMessage = await checkAndCreateReleaseIssue(jira, lastVersionNumber, version)
             if (resultMessage.length > 10) {
                 message += `\n\nЗадачи которые входят в релиз:\n${resultMessage}`
             }
@@ -183,7 +183,7 @@ async function postUsingBotToken(token, chatIds, version, status, appName) {
     })
 }
 
-async function checkAndCreateReleaseIssue(jira, lastVersion) {
+async function checkAndCreateReleaseIssue(jira, lastVersion, newVersion) {
     const notes = await execShellCommand(`sh ci_generate_release_notes.sh ${process.env.GIT_CLONE_URL} release/${lastVersion} https://${process.env.ATLASSIAN_HOST} ${process.env.ATLASSIAN_USERNAME} ${process.env.ATLASSIAN_TOKEN}`)
     if (notes.length > 10) {
         const issue = {
@@ -191,7 +191,7 @@ async function checkAndCreateReleaseIssue(jira, lastVersion) {
               "project": {
                 "id": "10221" // JSN
               },
-              "summary": "[release][ios] " + lastVersion,
+              "summary": "[release][ios] " + newVersion,
               "issuetype": {
                 "id": "10226" // Task
               },

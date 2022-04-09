@@ -28,7 +28,7 @@ GIT_MERGE_BASE=$(git merge-base $GIT_HEAD_SHA $GIT_TARGET_SHA | head -c 8)
 GIT_MESSAGES=$(git log -n 150 $GIT_TARGET_SHA...$GIT_HEAD_SHA --pretty="%h | %s")
 JIRA_TASKS=$(echo $GIT_MESSAGES | grep -Eo "[A-Z]{2,7}\-[0-9]+" | sort | uniq )
 
-matchesStrings=$(echo "${JIRA_TASKS[*]}")
+matchesStrings=$(echo "${JIRA_TASKS}")
 
 PYTHON_COLLECT_SCRIPT=../ci_request_jira_tasks.py
 

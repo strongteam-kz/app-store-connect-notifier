@@ -42,6 +42,7 @@ jobs:
         BOT_SLACK_WEBHOOK_URL: ${{ secrets.BOT_SLACK_WEBHOOK_URL }}
         BOT_STATUS_SLACK_WEBHOOK_URL: ${{ secrets.BOT_STATUS_SLACK_WEBHOOK_URL }}
         SLACK_CHANNEL_NAME: ${{ secrets.SLACK_CHANNEL_NAME }}
+        BOT_STATUS_SLACK_CHANNEL_NAME: ${{ secrets.BOT_STATUS_SLACK_CHANNEL_NAME }}
         ITC_TEAM_IDS: ${{ secrets.ITC_TEAM_IDS }}
         POLL_TIME_IN_SECONDS: ${{ secrets.POLL_TIME_IN_SECONDS }}
         NUMBER_OF_BUILDS: ${{ secrets.NUMBER_OF_BUILDS }}
@@ -60,6 +61,7 @@ jobs:
         echo BOT_SLACK_WEBHOOK_URL="\"$BOT_SLACK_WEBHOOK_URL\"" >> .env.jysan
         echo BOT_STATUS_SLACK_WEBHOOK_URL="\"$BOT_STATUS_SLACK_WEBHOOK_URL\"" >> .env.jysan
         echo SLACK_CHANNEL_NAME="\"$SLACK_CHANNEL_NAME\"" >> .env.jysan
+        echo BOT_STATUS_SLACK_CHANNEL_NAME="\"$BOT_STATUS_SLACK_CHANNEL_NAME\"" >> .env.jysan
         echo ITC_TEAM_IDS="\"$ITC_TEAM_IDS\"" >> .env.jysan
         echo POLL_TIME_IN_SECONDS="\"$POLL_TIME_IN_SECONDS\"" >> .env.jysan
         echo NUMBER_OF_BUILDS="\"$NUMBER_OF_BUILDS\"" >> .env.jysan

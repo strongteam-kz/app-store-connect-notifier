@@ -144,9 +144,12 @@ async function postUsingBotToken(token, chatIds, version, status, appName) {
         strictSSL: true
       })
 
+    var sendToTelegram = false
     var message = `Статус вашего приложения *${appName}* с версией *${version}* был изменен на *${status.formatted()}*`
 
     if (status === "PROCESSING") {
+        sendToTelegram = true
+        message = `Новый билд с версией *${version}* принят на проверку.`
         var lastVersionNumber = 0
         await jira.searchJira(`summary ~ "release ios"`)
         .then((response) => {
@@ -176,11 +179,33 @@ async function postUsingBotToken(token, chatIds, version, status, appName) {
         }
     }
 
-    message += "\n\nДля получения более подробной информаций перейдите на @strong\\_manager\\_bot"
-    chatIds.split(",").forEach((chatId) => {
-        const req = https.request(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${encodeURI(message)}&parse_mode=markdown`)
-        req.end()
-    })
+    if (status === "WAITING_FOR_REVIEW") {
+        sendToTelegram = true
+        message = `Билд уехал на ревью.`
+    }
+
+    if (status === "PENDING_DEVELOPER_RELEASE") {
+        sendToTelegram = true
+        message = `Билд готов к выпуску.`
+    }
+
+    if (status === "READY_FOR_SALE") {
+        sendToTelegram = true
+        message = `Билд вышел в App Store.`
+    }
+
+    if (status === "DEVELOPER_REJECTED") {
+        sendToTelegram = true
+        message = `Билд отклонен разработчиком.`
+    }
+
+    if (sendToTelegram) {
+        message += "\n\nДля получения более подробной информаций перейдите на @strong\\_manager\\_bot"
+        chatIds.split(",").forEach((chatId) => {
+            const req = https.request(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${encodeURI(message)}&parse_mode=markdown`)
+            req.end()
+        })
+    }
 }
 
 async function checkAndCreateReleaseIssue(jira, lastVersion, newVersion) {
